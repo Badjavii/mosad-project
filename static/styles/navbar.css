@@ -133,3 +133,19 @@
   flex-shrink: 0;
 }
 .playlist-item-delete:hover { color: var(--err); }
+
+/* ── Responsive ── */
+@media (max-width: 768px) {
+  .top-nav { padding: 0 14px; gap: 4px; }
+  .top-nav .brand { font-size: 13px; }
+  .top-nav a.nav-link { padding: 5px 10px; font-size: 12px; }
+
+  .sidebar { width: 200px; }
+  .playlist-item-name { font-size: 12px; }
+}
+
+@media (max-width: 480px) {
+  .top-nav a.nav-link { padding: 4px 8px; font-size: 11px; }
+  .sidebar { width: 100%; border-right: none; border-bottom: 1px solid var(--border); }
+  .playlists-layout { flex-direction: column; }
+}
