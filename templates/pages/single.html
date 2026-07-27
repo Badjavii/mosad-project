@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>MOSAD — Single Song</title>
+  <link rel="stylesheet" href="../../static/styles/base.css" />
+  <link rel="stylesheet" href="../../static/styles/navbar.css" />
+  <link rel="stylesheet" href="../../static/styles/pages.css" />
+</head>
+<body>
+
+  <nav class="top-nav">
+    <a href="/" class="brand">MOSAD</a>
+    <a href="/" class="nav-link">Workspace</a>
+    <a href="/single" class="nav-link active">Single Song</a>
+    <a href="/playlists" class="nav-link">Playlists</a>
+    <a href="/credits" class="nav-link">Credits</a>
+  </nav>
+
+  <!-- Search bar -->
+  <div class="search-wrap">
+    <div class="search-bar">
+      <input type="search" id="search-input" placeholder="Search for a song, artist or album..." />
+      <button class="btn btn-primary" id="btn-search">Search</button>
+    </div>
+  </div>
+
+  <!-- Results -->
+  <div class="results-list" id="results-list"></div>
+
+  <!-- Metadata modal -->
+  <div class="modal-overlay hidden" id="modal">
+    <div class="modal">
+      <h3>Download Song</h3>
+      <input type="hidden" id="modal-url" />
+
+      <div class="field">
+        <label>Title</label>
+        <input type="text" id="modal-title" />
+      </div>
+      <div class="field">
+        <label>Artist</label>
+        <input type="text" id="modal-artist" />
+      </div>
+      <div class="field">
+        <label>Album <span class="muted">(optional)</span></label>
+        <input type="text" id="modal-album" placeholder="Leave empty if unknown" />
+      </div>
+
+      <div class="modal-actions">
+        <button class="btn btn-primary" id="btn-download">&#8595; Download MP3</button>
+        <button class="btn btn-ghost" id="btn-cancel">Cancel</button>
+      </div>
+    </div>
+  </div>
+
+  <div id="toast"></div>
+  <script src="../../static/scripts/main.js"></script>
+  <script src="../../static/scripts/search.js"></script>
+</body>
+</html>
