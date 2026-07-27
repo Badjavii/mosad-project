@@ -1,0 +1,15 @@
+# Python
+__pycache__/ 
+*.pyc 
+.venv/
+venv/ 
+
+# Downloads (user-generated content)
+downloads/ 
+
+# Playlist data (user-generated content)
+playlists-data/ 
+
+# OS
+.DS_Store
+Thumbs.db
