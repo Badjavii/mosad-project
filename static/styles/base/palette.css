@@ -1,0 +1,41 @@
+/* ==========================================================================
+   MOSAD — Palette
+   Catppuccin Mocha — https://github.com/catppuccin/catppuccin
+   ========================================================================== */
+
+:root {
+  /* ── Raw colors ── */
+  --ctp-crust:    #11111b;
+  --ctp-mantle:   #181825;
+  --ctp-base:     #1e1e2e;
+  --ctp-surface0: #313244;
+  --ctp-surface1: #45475a;
+  --ctp-surface2: #585b70;
+  --ctp-overlay0: #6c7086;
+  --ctp-overlay1: #7f849c;
+  --ctp-subtext0: #a6adc8;
+  --ctp-subtext1: #bac2de;
+  --ctp-text:     #cdd6f4;
+  --ctp-lavender: #b4befe;
+  --ctp-mauve:    #cba6f7;
+  --ctp-green:    #a6e3a1;
+  --ctp-teal:     #94e2d5;
+  --ctp-blue:     #89b4fa;
+  --ctp-red:      #f38ba8;
+  --ctp-yellow:   #f9e2af;
+  --ctp-peach:    #fab387;
+
+  /* ── Semantic aliases ── */
+  --bg:           #292c3c;
+  --bg-surface:   var(--ctp-base);
+  --bg-elevated:  var(--ctp-surface0);
+  --border:       var(--ctp-surface1);
+  --text:         var(--ctp-text);
+  --text-muted:   var(--ctp-subtext0);
+  --accent:       var(--ctp-mauve);
+  --accent-text:  var(--ctp-crust);
+  --logo-color:   var(--ctp-green);
+  --success:      var(--ctp-green);
+  --error:        var(--ctp-red);
+  --warning:      var(--ctp-yellow);
+}

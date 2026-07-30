@@ -1,0 +1,12 @@
+/* ==========================================================================
+   MOSAD — Fonts
+   Inconsolata : display, logo, monospace elements
+   Inter       : body, UI, labels
+   ========================================================================== */
+
+@import url('https://fonts.googleapis.com/css2?family=Inconsolata:wdth,wght@75..125,200..900&family=Inter:wght@300;400;500;600;700&display=swap');
+
+:root {
+  --font-display: 'Inconsolata', 'Courier New', monospace;
+  --font-body:    'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+}
