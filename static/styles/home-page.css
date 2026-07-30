@@ -1,0 +1,91 @@
+/* ==========================================================================
+   MOSAD — Home Page
+   ========================================================================== */
+
+/* ── Layout ── */
+.homepage {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 100dvh;
+  padding: 2rem;
+  text-align: center;
+}
+
+/* ── Logo ── */
+.homepage-header {
+  display: grid;
+  justify-items: center;
+  margin-bottom: 1.5rem;
+}
+
+.homepage-logo {
+  font-family: 'Inconsolata', monospace;
+  font-weight: 700;
+  font-size: clamp(0.8rem, 2.1vw, 2.8rem);
+  line-height: 1.09375;
+  letter-spacing: -0.0425em;
+  color: #A6D189;
+  white-space: pre;
+  user-select: none;
+  justify-self: center;
+}
+
+/* ── Content ── */
+.homepage-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.5rem;
+}
+
+/* ── Subtitle ── */
+.homepage-subtitle {
+  font-family: 'Inter', sans-serif;
+  font-size: clamp(0.875rem, 1.17vw, 22px);
+  font-weight: 700;
+  color: #C6D0F5;
+}
+
+/* ── Nav buttons ── */
+.homepage-nav {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: clamp(120px, 8.96vw, 172px);
+  height: clamp(44px, 3.13vw, 60px);
+  border-radius: 10px;
+  font-family: 'Inter', sans-serif;
+  font-size: clamp(1rem, 1.57vw, 30px);
+  font-weight: 700;
+  cursor: pointer;
+  transition: background-color 160ms ease, color 160ms ease, border-color 160ms ease;
+  white-space: nowrap;
+}
+
+.btn-ghost {
+  background: #292C3C;
+  color: #C6D0F5;
+  border: 1px solid #C6D0F5;
+  box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.25);
+}
+
+.btn-ghost:hover {
+  background-color: var(--accent);
+  color: var(--accent-text);
+  border-color: var(--accent);
+}
+
+/* ── Responsive ── */
+@media (max-width: 600px) {
+  .homepage-nav { flex-direction: column; align-items: center; }
+  .btn          { width: 200px; height: 56px; font-size: 1.2rem; }
+}
