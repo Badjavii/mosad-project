@@ -3,60 +3,91 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>MOSAD — Single Song</title>
-  <link rel="stylesheet" href="../../static/styles/base.css" />
-  <link rel="stylesheet" href="../../static/styles/navbar.css" />
-  <link rel="stylesheet" href="../../static/styles/pages.css" />
+  <title>Mosad — Singles</title>
+  <link rel="stylesheet" href="/static/styles/base.css" />
+  <link rel="stylesheet" href="/static/styles/single-page.css" />
 </head>
 <body>
 
-  <nav class="top-nav">
-    <a href="/" class="brand">MOSAD</a>
-    <a href="/" class="nav-link">Workspace</a>
-    <a href="/single" class="nav-link active">Single Song</a>
-    <a href="/playlists" class="nav-link">Playlists</a>
-    <a href="/credits" class="nav-link">Credits</a>
+  <!-- Navbar -->
+  <nav class="navbar">
+    <a href="/" class="navbar-logo" aria-label="MOSAD home">
+      <pre aria-hidden="true">
+███▄ ▄███▓ ▒█████    ██████  ▄▄▄      ▓█████▄ 
+▓██▒▀█▀ ██▒▒██▒  ██▒▒██    ▒ ▒████▄    ▒██▀ ██▌
+▓██    ▓██░▒██░  ██▒░ ▓██▄   ▒██  ▀█▄  ░██   █▌
+▒██    ▒██ ▒██   ██░  ▒   ██▒░██▄▄▄▄██ ░▓█▄   ▌
+▒██▒   ░██▒░ ████▓▒░▒██████▒▒ ▓█   ▓██▒░▒████▓ 
+░ ▒░   ░  ░░ ▒░▒░▒░ ▒ ▒▓▒ ▒ ░ ▒▒   ▓▒█░ ▒▒▓  ▒
+      </pre>
+    </a>
+    <ul class="navbar-links" role="list">
+      <li><a href="/single"    class="navbar-link active">Singles</a></li>
+      <li><a href="/playlists" class="navbar-link">Playlists</a></li>
+      <li><a href="/credits"   class="navbar-link">Credits</a></li>
+    </ul>
   </nav>
 
-  <!-- Search bar -->
-  <div class="search-wrap">
-    <div class="search-bar">
-      <input type="search" id="search-input" placeholder="Search for a song, artist or album..." />
-      <button class="btn btn-primary" id="btn-search">Search</button>
-    </div>
-  </div>
+  <!-- Main -->
+  <main class="single-page">
 
-  <!-- Results -->
-  <div class="results-list" id="results-list"></div>
+    <!-- Search section — has two states: initial and searching -->
+    <section class="search-section" id="search-section">
 
-  <!-- Metadata modal -->
-  <div class="modal-overlay hidden" id="modal">
-    <div class="modal">
-      <h3>Download Song</h3>
+      <h1 class="search-title" id="search-title">Find for a song</h1>
+
+      <div class="search-bar" id="search-bar">
+        <input
+          class="search-input"
+          type="search"
+          id="search-input"
+          placeholder="Example: Piano Man from Billy Joel"
+          autocomplete="off"
+          aria-label="Search for a song"
+        />
+        <button class="search-btn" id="btn-search">Search</button>
+      </div>
+
+    </section>
+
+    <!-- Results — hidden until search -->
+    <section class="results-section hidden" id="results-section" aria-live="polite">
+      <ul class="results-list" id="results-list" role="list"></ul>
+    </section>
+
+  </main>
+
+  <!-- Download modal -->
+  <dialog class="modal" id="modal-download" aria-labelledby="modal-title">
+    <div class="modal-inner">
+      <h2 class="modal-title" id="modal-title">Download Song</h2>
+
       <input type="hidden" id="modal-url" />
 
-      <div class="field">
-        <label>Title</label>
-        <input type="text" id="modal-title" />
+      <div class="modal-field">
+        <label class="modal-label" for="modal-input-title">Title</label>
+        <input class="modal-input" type="text" id="modal-input-title" />
       </div>
-      <div class="field">
-        <label>Artist</label>
-        <input type="text" id="modal-artist" />
+
+      <div class="modal-field">
+        <label class="modal-label" for="modal-input-artist">Artist</label>
+        <input class="modal-input" type="text" id="modal-input-artist" />
       </div>
-      <div class="field">
-        <label>Album <span class="muted">(optional)</span></label>
-        <input type="text" id="modal-album" placeholder="Leave empty if unknown" />
+
+      <div class="modal-field">
+        <label class="modal-label" for="modal-input-album">Album (optional)</label>
+        <input class="modal-input" type="text" id="modal-input-album" />
       </div>
 
       <div class="modal-actions">
-        <button class="btn btn-primary" id="btn-download">&#8595; Download MP3</button>
-        <button class="btn btn-ghost" id="btn-cancel">Cancel</button>
+        <button class="btn btn-primary" id="btn-download">↓ Download MP3</button>
+        <button class="btn btn-cancel" id="btn-cancel">Cancel</button>
       </div>
     </div>
-  </div>
+  </dialog>
 
-  <div id="toast"></div>
-  <script src="../../static/scripts/main.js"></script>
-  <script src="../../static/scripts/search.js"></script>
+  <div id="toast" role="status" aria-live="polite"></div>
+  <script src="/static/scripts/main.js"></script>
+  <script src="/static/scripts/search.js"></script>
 </body>
 </html>
