@@ -1,16 +1,22 @@
 // scripts/search.js
-// Handles YouTube search and single song download on the Single Song page.
+// Single song search, results animation and download modal.
 
-const searchInput  = document.getElementById("search-input");
-const btnSearch    = document.getElementById("btn-search");
-const resultsList  = document.getElementById("results-list");
-const modal        = document.getElementById("modal");
-const modalUrl     = document.getElementById("modal-url");
-const modalTitle   = document.getElementById("modal-title");
-const modalArtist  = document.getElementById("modal-artist");
-const modalAlbum   = document.getElementById("modal-album");
-const btnDownload  = document.getElementById("btn-download");
-const btnCancel    = document.getElementById("btn-cancel");
+const searchInput   = document.getElementById('search-input');
+const btnSearch     = document.getElementById('btn-search');
+const searchTitle   = document.getElementById('search-title');
+const searchSection = document.getElementById('search-section');
+const resultsSection= document.getElementById('results-section');
+const resultsList   = document.getElementById('results-list');
+
+const modalEl       = document.getElementById('modal-download');
+const modalUrl      = document.getElementById('modal-url');
+const modalTitle    = document.getElementById('modal-input-title');
+const modalArtist   = document.getElementById('modal-input-artist');
+const modalAlbum    = document.getElementById('modal-input-album');
+const btnDownload   = document.getElementById('btn-download');
+const btnCancel     = document.getElementById('btn-cancel');
+
+let hasSearched = false;
 
 // ── Search ────────────────────────────────────────────────────────────────────
 
@@ -19,118 +25,127 @@ async function doSearch() {
   if (!q) return;
 
   btnSearch.disabled = true;
-  btnSearch.textContent = "Searching…";
-  resultsList.innerHTML = "";
+  btnSearch.textContent = 'Searching…';
+
+  // Animate title out on first search
+  if (!hasSearched) {
+    searchTitle.classList.add('hidden-animated');
+    searchSection.classList.add('has-results');
+    hasSearched = true;
+  }
+
+  resultsSection.classList.add('hidden');
+  resultsList.innerHTML = '';
 
   try {
     const res  = await fetch(`/api/search?q=${encodeURIComponent(q)}`);
     const data = await res.json();
+    if (!res.ok) throw new Error(data.error || 'Search failed');
 
-    if (!res.ok) throw new Error(data.error || "Search failed");
-    if (!data.results.length) {
-      resultsList.innerHTML = `<p class="muted" style="text-align:center">No results found.</p>`;
-      return;
-    }
-
-    data.results.forEach(song => {
-      const card = document.createElement("div");
-      card.className = "result-card";
-      card.innerHTML = `
-        <img class="result-thumb" src="${song.thumbnail}" alt="" loading="lazy" onerror="this.style.display='none'" />
-        <div class="result-info">
-          <div class="result-title">${escapeHtml(song.title)}</div>
-          <div class="result-meta">${escapeHtml(song.channel)}</div>
-          <span class="result-duration">${song.duration}</span>
-        </div>
-        <div class="result-actions">
-          <button class="btn btn-primary btn-sm" data-url="${song.url}" data-title="${escapeHtml(song.title)}" data-channel="${escapeHtml(song.channel)}">
-            &#8595; Download
-          </button>
-        </div>
-      `;
-      card.querySelector("button").addEventListener("click", openDownloadModal);
-      resultsList.appendChild(card);
-    });
+    renderResults(data.results || []);
+    resultsSection.classList.remove('hidden');
 
   } catch (err) {
-    showToast(err.message, "err");
+    showToast(err.message, 'err');
   } finally {
     btnSearch.disabled = false;
-    btnSearch.textContent = "Search";
+    btnSearch.textContent = 'Search';
   }
 }
 
-btnSearch.addEventListener("click", doSearch);
-searchInput.addEventListener("keydown", e => { if (e.key === "Enter") doSearch(); });
+btnSearch.addEventListener('click', doSearch);
+searchInput.addEventListener('keydown', e => { if (e.key === 'Enter') doSearch(); });
+
+// ── Render results ────────────────────────────────────────────────────────────
+
+function renderResults(results) {
+  if (!results.length) {
+    resultsList.innerHTML = '<li style="text-align:center;padding:2rem;color:#6c7086">No results found.</li>';
+    return;
+  }
+
+  results.forEach((song, i) => {
+    const li = document.createElement('li');
+    li.style.animationDelay = `${i * 50}ms`;
+    li.innerHTML = `
+      <div class="result-card">
+        <div class="result-info">
+          <div class="result-title">${esc(song.title)}</div>
+          <div class="result-artist">${esc(song.channel)}</div>
+          <span class="result-duration">${esc(song.duration)}</span>
+        </div>
+        <button class="btn-download"
+          data-url="${esc(song.url)}"
+          data-title="${esc(song.title)}"
+          data-channel="${esc(song.channel)}">
+          ↓ Download
+        </button>
+      </div>
+    `;
+    li.querySelector('.btn-download').addEventListener('click', openModal);
+    resultsList.appendChild(li);
+  });
+}
 
 // ── Download modal ────────────────────────────────────────────────────────────
 
-function openDownloadModal(e) {
+function openModal(e) {
   const btn = e.currentTarget;
   modalUrl.value    = btn.dataset.url;
   modalTitle.value  = btn.dataset.title;
   modalArtist.value = btn.dataset.channel;
-  modalAlbum.value  = "";
-  modal.classList.remove("hidden");
+  modalAlbum.value  = '';
+  modalEl.showModal();
   modalTitle.focus();
 }
 
-btnCancel.addEventListener("click", () => modal.classList.add("hidden"));
+btnCancel.addEventListener('click', () => modalEl.close());
 
-btnDownload.addEventListener("click", async () => {
+// Close on backdrop click
+modalEl.addEventListener('click', e => {
+  const rect = modalEl.getBoundingClientRect();
+  const outside = e.clientX < rect.left || e.clientX > rect.right ||
+                  e.clientY < rect.top  || e.clientY > rect.bottom;
+  if (outside) modalEl.close();
+});
+
+btnDownload.addEventListener('click', async () => {
   const title  = modalTitle.value.trim();
   const artist = modalArtist.value.trim();
   const album  = modalAlbum.value.trim();
   const url    = modalUrl.value;
 
-  if (!title || !artist) {
-    showToast("Title and Artist are required.", "err");
-    return;
-  }
+  if (!title || !artist) { showToast('Title and artist are required.', 'err'); return; }
 
   btnDownload.disabled = true;
-  btnDownload.textContent = "Downloading…";
+  btnDownload.textContent = 'Downloading…';
+
+  showToast(`Downloading "${title}"…`, 'info');
 
   try {
-    const res = await fetch("/api/single/download", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
+    const res  = await fetch('/api/single/download', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ title, artist, album, youtube_url: url }),
     });
+    const data = await res.json();
+    if (!res.ok) throw new Error(data.error || 'Download failed');
 
-    if (!res.ok) {
-      const data = await res.json();
-      throw new Error(data.error || "Download failed");
-    }
-
-    // Trigger browser download from the binary response
-    const blob     = await res.blob();
-    const blobUrl  = URL.createObjectURL(blob);
-    const disposition = res.headers.get("Content-Disposition") || "";
-    const match    = disposition.match(/filename="(.+)"/);
-    const filename = match ? match[1] : `${artist}-${title}.mp3`;
-
-    const a = document.createElement("a");
-    a.href = blobUrl;
-    a.download = filename;
-    a.click();
-    URL.revokeObjectURL(blobUrl);
-
-    modal.classList.add("hidden");
-    showToast(`"${title}" downloaded successfully.`, "ok");
+    modalEl.close();
+    showToast(`"${title}" saved to downloads/singles/`, 'ok');
 
   } catch (err) {
-    showToast(err.message, "err");
+    showToast(err.message, 'err');
   } finally {
     btnDownload.disabled = false;
-    btnDownload.textContent = "↓ Download MP3";
+    btnDownload.textContent = '↓ Download MP3';
   }
 });
 
-// ── Helpers ───────────────────────────────────────────────────────────────────
+// ── Helper ────────────────────────────────────────────────────────────────────
 
-function escapeHtml(text) {
-  const d = document.createElement("div");
-  d.textContent = text;
+function esc(str) {
+  const d = document.createElement('div');
+  d.textContent = str || '';
   return d.innerHTML;
 }
