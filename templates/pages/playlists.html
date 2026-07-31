@@ -4,124 +4,141 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>MOSAD — Playlists</title>
-  <link rel="stylesheet" href="../../static/styles/base.css" />
-  <link rel="stylesheet" href="../../static/styles/navbar.css" />
-  <link rel="stylesheet" href="../../static/styles/pages.css" />
+  <link rel="stylesheet" href="/static/styles/base.css" />
+  <link rel="stylesheet" href="/static/styles/playlist-page.css" />
 </head>
 <body>
 
-  <nav class="top-nav">
-    <a href="/" class="brand">MOSAD</a>
-    <a href="/" class="nav-link">Workspace</a>
-    <a href="/single" class="nav-link">Single Song</a>
-    <a href="/playlists" class="nav-link active">Playlists</a>
-    <a href="/credits" class="nav-link">Credits</a>
+  <!-- Navbar -->
+  <nav class="navbar">
+    <a href="/" class="navbar-logo" aria-label="MOSAD home">
+      <pre aria-hidden="true">
+███▄ ▄███▓ ▒█████    ██████  ▄▄▄      ▓█████▄ 
+▓██▒▀█▀ ██▒▒██▒  ██▒▒██    ▒ ▒████▄    ▒██▀ ██▌
+▓██    ▓██░▒██░  ██▒░ ▓██▄   ▒██  ▀█▄  ░██   █▌
+▒██    ▒██ ▒██   ██░  ▒   ██▒░██▄▄▄▄██ ░▓█▄   ▌
+▒██▒   ░██▒░ ████▓▒░▒██████▒▒ ▓█   ▓██▒░▒████▓ 
+░ ▒░   ░  ░░ ▒░▒░▒░ ▒ ▒▓▒ ▒ ░ ▒▒   ▓▒█░ ▒▒▓  ▒
+      </pre>
+    </a>
+    <ul class="navbar-links" role="list">
+      <li><a href="/single"    class="navbar-link">Singles</a></li>
+      <li><a href="/playlists" class="navbar-link active">Playlists</a></li>
+      <li><a href="/credits"   class="navbar-link">Credits</a></li>
+    </ul>
   </nav>
 
-  <div class="playlists-layout">
+  <!-- Page body -->
+  <div class="playlists-page">
 
     <!-- Sidebar -->
     <aside class="sidebar" id="sidebar">
-      <div class="sidebar-section">
-        <span class="sidebar-label">Actions</span>
+      <section class="sidebar-section">
+        <h2 class="sidebar-label">Actions</h2>
         <button class="sidebar-btn" id="btn-new-playlist">+ New Playlist</button>
-        <button class="sidebar-btn" id="btn-import-playlist">&#8627; Import JSON</button>
+        <button class="sidebar-btn" id="btn-import-json">↳ Import JSON</button>
         <input type="file" id="import-file-input" accept=".json" class="hidden" />
-      </div>
-      <div class="sidebar-divider"></div>
-      <div class="sidebar-section">
-        <span class="sidebar-label">Your Playlists</span>
-      </div>
-      <div id="playlist-nav-list"></div>
+      </section>
+
+      <hr class="sidebar-divider" />
+
+      <section class="sidebar-section">
+        <h2 class="sidebar-label">Your Playlists</h2>
+        <ul class="playlist-nav" id="playlist-nav" role="list"></ul>
+      </section>
     </aside>
 
     <!-- Main content -->
     <main class="playlist-content" id="playlist-content">
-      <!-- Empty state shown by JS -->
+      <div class="empty-state" id="empty-state">
+        <p>Select any playlist from the sidebar,<br />import a playlist with JSON or create a new playlist.</p>
+      </div>
     </main>
 
   </div>
 
-  <!-- New playlist modal -->
-  <div class="modal-overlay hidden" id="modal-new">
-    <div class="modal">
-      <h3>New Playlist</h3>
-      <div class="field">
-        <label>Name</label>
-        <input type="text" id="new-playlist-name" placeholder="My Playlist" />
+  <!-- Mobile sidebar toggle -->
+  <button class="sidebar-toggle" id="sidebar-toggle" aria-label="Toggle sidebar">☰</button>
+
+  <!-- Modal: New Playlist -->
+  <dialog class="modal" id="modal-new-playlist">
+    <div class="modal-inner">
+      <h2 class="modal-title">New Playlist</h2>
+      <div class="modal-field">
+        <label class="modal-label" for="new-playlist-name">Name</label>
+        <input class="modal-input" type="text" id="new-playlist-name" autocomplete="off" />
       </div>
       <div class="modal-actions">
-        <button class="btn btn-primary" id="btn-create-playlist">Create</button>
-        <button class="btn btn-ghost" id="btn-cancel-new">Cancel</button>
+        <button class="modal-btn modal-btn--primary" id="btn-create-playlist">Create</button>
+        <button class="modal-btn modal-btn--cancel" id="btn-cancel-new-playlist">Cancel</button>
       </div>
     </div>
-  </div>
+  </dialog>
 
-  <!-- Add song modal (search + metadata) -->
-  <div class="modal-overlay hidden" id="modal-add-song">
-    <div class="modal" style="max-width:520px">
-      <h3>Add Song to Playlist</h3>
-
-      <!-- Step 1: search -->
-      <div id="add-song-search-step">
-        <div class="search-bar" style="margin-bottom:12px">
-          <input type="search" id="add-search-input" placeholder="Search on YouTube..." />
-          <button class="btn btn-primary btn-sm" id="btn-add-search">Search</button>
-        </div>
-        <div id="add-search-results" style="max-height:260px;overflow-y:auto;display:flex;flex-direction:column;gap:8px;"></div>
+  <!-- Modal: Add Song -->
+  <dialog class="modal" id="modal-add-song">
+    <div class="modal-inner">
+      <h2 class="modal-title">Add Song</h2>
+      <div class="add-song-search">
+        <input class="modal-input" type="search" id="add-song-input"
+               placeholder="Search for a song…" autocomplete="off" />
+        <button class="modal-btn modal-btn--primary" id="btn-add-song-search">Search</button>
       </div>
-
-      <!-- Step 2: metadata (hidden until song selected) -->
-      <div id="add-song-meta-step" class="hidden">
-        <div class="field">
-          <label>Title</label>
-          <input type="text" id="add-title" />
-        </div>
-        <div class="field">
-          <label>Artist</label>
-          <input type="text" id="add-artist" />
-        </div>
-        <div class="field">
-          <label>Album <span class="muted">(optional)</span></label>
-          <input type="text" id="add-album" placeholder="Leave empty if unknown" />
-        </div>
-        <input type="hidden" id="add-url" />
-        <div class="modal-actions">
-          <button class="btn btn-primary" id="btn-confirm-add">Add to Playlist</button>
-          <button class="btn btn-ghost" id="btn-back-add">&#8592; Back</button>
-        </div>
+      <div class="add-song-results hidden" id="add-song-results">
+        <p class="modal-label">Results</p>
+        <ul class="add-results-list" id="add-results-list" role="list"></ul>
       </div>
-
-      <button class="btn btn-ghost btn-sm" id="btn-cancel-add" style="margin-top:14px;width:100%;justify-content:center;">Cancel</button>
+      <div class="modal-actions" style="margin-top: 1.5rem">
+        <button class="modal-btn modal-btn--cancel" id="btn-cancel-add-song">Cancel</button>
+      </div>
     </div>
-  </div>
+  </dialog>
 
-  <!-- Edit song metadata modal -->
-  <div class="modal-overlay hidden" id="modal-edit-song">
-    <div class="modal">
-      <h3>Edit Song Metadata</h3>
-      <input type="hidden" id="edit-song-id" />
-      <div class="field">
-        <label>Title</label>
-        <input type="text" id="edit-title" />
+  <!-- Modal: Edit Song Metadata -->
+  <dialog class="modal" id="modal-edit-song">
+    <div class="modal-inner">
+      <h2 class="modal-title">Edit Song Metadata</h2>
+      <input type="hidden" id="edit-song-order" />
+      <div class="modal-field">
+        <label class="modal-label" for="edit-song-title">Title</label>
+        <input class="modal-input" type="text" id="edit-song-title" />
       </div>
-      <div class="field">
-        <label>Artist</label>
-        <input type="text" id="edit-artist" />
+      <div class="modal-field">
+        <label class="modal-label" for="edit-song-artist">Artist</label>
+        <input class="modal-input" type="text" id="edit-song-artist" />
       </div>
-      <div class="field">
-        <label>Album <span class="muted">(optional)</span></label>
-        <input type="text" id="edit-album" />
+      <div class="modal-field">
+        <label class="modal-label" for="edit-song-album">Album (optional)</label>
+        <input class="modal-input" type="text" id="edit-song-album" />
       </div>
       <div class="modal-actions">
-        <button class="btn btn-primary" id="btn-save-edit">Save</button>
-        <button class="btn btn-ghost" id="btn-cancel-edit">Cancel</button>
+        <button class="modal-btn modal-btn--primary" id="btn-save-edit">Save</button>
+        <button class="modal-btn modal-btn--cancel" id="btn-cancel-edit">Cancel</button>
       </div>
     </div>
-  </div>
+  </dialog>
 
-  <div id="toast"></div>
-  <script src="../../static/scripts/main.js"></script>
-  <script src="../../static/scripts/playlists.js"></script>
+  <!-- Modal: Downloading Playlist -->
+  <dialog class="modal" id="modal-downloading">
+    <div class="modal-inner">
+      <h2 class="modal-title">Downloading Playlist</h2>
+      <p class="modal-label" style="margin-bottom: 0.5rem">Progress of downloading</p>
+      <div class="dl-progress-wrap">
+        <progress class="dl-progress-bar" id="dl-progress-bar" value="0" max="100"></progress>
+        <span class="dl-progress-pct" id="dl-progress-pct">0%</span>
+      </div>
+      <p class="modal-label" style="margin: 1.25rem 0 0.5rem">More details (look the logs)</p>
+      <div class="dl-log-wrap">
+        <pre class="dl-log" id="dl-log"></pre>
+      </div>
+      <div class="modal-actions" style="margin-top: 1.5rem">
+        <button class="modal-btn modal-btn--cancel" id="btn-cancel-download">Cancel Process</button>
+      </div>
+    </div>
+  </dialog>
+
+  <div id="toast" role="status" aria-live="polite"></div>
+  <script src="/static/scripts/main.js"></script>
+  <script src="/static/scripts/playlists.js"></script>
 </body>
 </html>
