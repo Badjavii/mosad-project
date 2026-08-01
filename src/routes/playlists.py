@@ -244,7 +244,11 @@ def _download_one(job_id: str, song: dict, out_dir: str) -> None:
     title = song["title"]
     _add_current(job_id, title)
     try:
-        file_path = download_audio(song["youtube_url"], out_dir, song["file_name"])
+        # Prefix with order to preserve playlist sequence
+        order_prefix = str(song["order"]).zfill(3)
+        file_name    = f"{order_prefix}-{song['file_name']}"
+
+        file_path = download_audio(song["youtube_url"], out_dir, file_name)
         write_metadata(file_path, title=song["title"], artist=song["artist"], album=song.get("album"))
         _add_log(job_id, f"✓ {title}")
         _update_job(job_id, done_delta=1)
@@ -253,7 +257,6 @@ def _download_one(job_id: str, song: dict, out_dir: str) -> None:
         _update_job(job_id, failed_delta=1, done_delta=1)
     finally:
         _remove_current(job_id, title)
-
 
 # ── Job state helpers ─────────────────────────────────────────────────────────
 
