@@ -3,37 +3,36 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>MOSAD — Credits</title>
-  <link rel="stylesheet" href="../../static/styles/base.css" />
-  <link rel="stylesheet" href="../../static/styles/navbar.css" />
-  <link rel="stylesheet" href="../../static/styles/pages.css" />
+  <title>Mosad — Credits</title>
+  <link rel="stylesheet" href="/static/styles/base.css" />
+  <link rel="stylesheet" href="/static/styles/credits-page.css" />
 </head>
 <body>
 
-  <nav class="top-nav">
-    <a href="/" class="brand">MOSAD</a>
-    <a href="/" class="nav-link">Workspace</a>
-    <a href="/single" class="nav-link">Single Song</a>
-    <a href="/playlists" class="nav-link">Playlists</a>
-    <a href="/credits" class="nav-link active">Credits</a>
+  <nav class="navbar">
+    <a href="/" class="navbar-logo" aria-label="MOSAD home">
+      <pre aria-hidden="true">
+███▄ ▄███▓ ▒█████    ██████  ▄▄▄      ▓█████▄ 
+▓██▒▀█▀ ██▒▒██▒  ██▒▒██    ▒ ▒████▄    ▒██▀ ██▌
+▓██    ▓██░▒██░  ██▒░ ▓██▄   ▒██  ▀█▄  ░██   █▌
+▒██    ▒██ ▒██   ██░  ▒   ██▒░██▄▄▄▄██ ░▓█▄   ▌
+▒██▒   ░██▒░ ████▓▒░▒██████▒▒ ▓█   ▓██▒░▒████▓ 
+░ ▒░   ░  ░░ ▒░▒░▒░ ▒ ▒▓▒ ▒ ░ ▒▒   ▓▒█░ ▒▒▓  ▒ 
+      </pre>
+    </a>
+    <ul class="navbar-links" role="list">
+      <li><a href="/single"    class="navbar-link">Singles</a></li>
+      <li><a href="/playlists" class="navbar-link">Playlists</a></li>
+      <li><a href="/credits"   class="navbar-link active">Credits</a></li>
+    </ul>
   </nav>
 
-  <div class="credits-page">
-    <p class="brand-big">MOSAD</p>
-    <p style="font-family:var(--mono);color:var(--muted);font-size:12px;letter-spacing:.06em;">
-      MUSIC OPEN SOURCE APPLICATION DESKTOP
+  <main class="credits-page">
+    <p class="credits-text">
+      This project is proudly designed and developed<br />
+      by <span class="credits-author">badjavii</span>, junior dev.
     </p>
-    <br />
-    <p>
-      Proudly designed and developed by <strong>Badjavii</strong>, junior developer.
-    </p>
-    <p class="muted" style="font-size:13px;margin-top:4px;">
-      Built with Flask, yt-dlp, mutagen and no frameworks.
-    </p>
-    <br />
-    <a href="/" class="btn btn-ghost btn-sm">&#8592; Back to Workspace</a>
-  </div>
+  </main>
 
-  <script src="../../static/scripts/main.js"></script>
 </body>
 </html>
