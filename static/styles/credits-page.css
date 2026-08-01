@@ -1,0 +1,71 @@
+/* ==========================================================================
+   MOSAD — Credits Page
+   ========================================================================== */
+
+/* ── Navbar ── */
+.navbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 2.5rem;
+  height: 64px;
+  background: #3D4157;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+.navbar-logo pre {
+  font-family: 'Inconsolata', monospace;
+  font-weight: 700;
+  font-size: 0.29rem;
+  line-height: 1.09;
+  letter-spacing: -0.04em;
+  color: #1e1e2e;
+  user-select: none;
+  white-space: pre;
+}
+
+.navbar-links {
+  display: flex;
+  gap: 3rem;
+  list-style: none;
+}
+
+.navbar-link {
+  font-family: 'Inter', sans-serif;
+  font-size: clamp(1rem, 1.3vw, 1.3rem);
+  font-weight: 700;
+  color: #C6D0F5;
+  transition: color 160ms ease;
+}
+.navbar-link:hover  { color: #A6D189; }
+.navbar-link.active { color: #A6D189; }
+
+/* ── Page ── */
+.credits-page {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: calc(100dvh - 64px);
+  text-align: center;
+  padding: 2rem;
+}
+
+.credits-text {
+  font-family: 'Inter', sans-serif;
+  font-size: clamp(1.1rem, 2vw, 1.5rem);
+  font-weight: 700;
+  color: #C6D0F5;
+  line-height: 1.7;
+}
+
+.credits-author {
+  color: #A6D189;
+}
+
+/* ── Responsive ── */
+@media (max-width: 600px) {
+  .navbar       { padding: 0 1rem; }
+  .navbar-links { gap: 1.5rem; }
+}
