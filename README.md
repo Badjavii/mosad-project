@@ -1,7 +1,9 @@
 <div align="center">
 
 <!-- Title -->
-<img src="assets/mosad-logo.svg" alt="MOSAD" />
+<p align="center">
+    <img src="assets/mosad-logo.svg" alt="MOSAD" />
+</p>
 
 <!-- Subtitle -->
 _Music Open Source Application Desktop_

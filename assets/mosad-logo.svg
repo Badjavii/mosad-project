@@ -1,15 +1,16 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="439" height="124">
-  <rect width="100%" height="100%" fill="#292c3c"/>
+<svg xmlns="http://www.w3.org/2000/svg" width="406" height="125">
+  <rect width="100%" height="100%" fill="none"/>
   <text
     font-family="Courier New, monospace"
-    font-size="12"
+    font-size="13"
+    letter-spacing="-0.0425em"
     fill="#A6D189"
     xml:space="preserve">
-    <tspan x="20" dy="0" y="34">███▄ ▄███▓ ▒█████    ██████  ▄▄▄      ▓█████▄ </tspan>
-    <tspan x="20" dy="0" y="48">▓██▒▀█▀ ██▒▒██▒  ██▒▒██    ▒ ▒████▄    ▒██▀ ██▌</tspan>
-    <tspan x="20" dy="0" y="62">▓██    ▓██░▒██░  ██▒░ ▓██▄   ▒██  ▀█▄  ░██   █▌</tspan>
-    <tspan x="20" dy="0" y="76">▒██    ▒██ ▒██   ██░  ▒   ██▒░██▄▄▄▄██ ░▓█▄   ▌</tspan>
-    <tspan x="20" dy="0" y="90">▒██▒   ░██▒░ ████▓▒░▒██████▒▒ ▓█   ▓██▒░▒████▓ </tspan>
-    <tspan x="20" dy="0" y="104">░ ▒░   ░  ░░ ▒░▒░▒░ ▒ ▒▓▒ ▒ ░ ▒▒   ▓▒█░ ▒▒▓  ▒</tspan>
+    <tspan x="20" dy="0" y="34.22">███▄ ▄███▓ ▒█████    ██████  ▄▄▄      ▓█████▄ </tspan>
+    <tspan x="20" dy="0" y="48.44">▓██▒▀█▀ ██▒▒██▒  ██▒▒██    ▒ ▒████▄    ▒██▀ ██▌</tspan>
+    <tspan x="20" dy="0" y="62.66">▓██    ▓██░▒██░  ██▒░ ▓██▄   ▒██  ▀█▄  ░██   █▌</tspan>
+    <tspan x="20" dy="0" y="76.88">▒██    ▒██ ▒██   ██░  ▒   ██▒░██▄▄▄▄██ ░▓█▄   ▌</tspan>
+    <tspan x="20" dy="0" y="91.09">▒██▒   ░██▒░ ████▓▒░▒██████▒▒ ▓█   ▓██▒░▒████▓ </tspan>
+    <tspan x="20" dy="0" y="105.31">░ ▒░   ░  ░░ ▒░▒░▒░ ▒ ▒▓▒ ▒ ░ ▒▒   ▓▒█░ ▒▒▓  ▒</tspan>
   </text>
 </svg>
